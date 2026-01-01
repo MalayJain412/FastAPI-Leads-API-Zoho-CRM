@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "Zoho CRM Lead API",
+    "description": "Complete API collection for managing Zoho CRM leads with OAuth authentication. Includes all available endpoints: health check, OAuth flow, and full CRUD operations for leads plus lead summaries.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "General",
+      "item": [
+        {
+          "name": "Root",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Health check endpoint to verify API is running",
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OAuth Callback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "OAuth callback endpoint that receives authorization code from Zoho",
+            "url": {
+              "raw": "{{base_url}}/oauth/callback?code={{auth_code}}",
+              "host": ["{{base_url}}"],
+              "path": ["oauth", "callback"],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "{{auth_code}}",
+                  "description": "Authorization code received from Zoho OAuth"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "OAuth",
+      "item": [
+        {
+          "name": "Get OAuth URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Get the Zoho OAuth authorization URL to initiate the OAuth flow",
+            "url": {
+              "raw": "{{base_url}}/zoho/oauth/url",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "oauth", "url"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Exchange Code for Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Exchange the authorization code for access and refresh tokens",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{auth_code}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/zoho/oauth/token",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "oauth", "token"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Leads",
+      "item": [
+        {
+          "name": "Get Leads",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Retrieve all leads from Zoho CRM",
+            "url": {
+              "raw": "{{base_url}}/zoho/leads",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "leads"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Lead Summaries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Retrieve summarized lead information (id, name, email, company) from Zoho CRM",
+            "url": {
+              "raw": "{{base_url}}/zoho/leads/summary",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "leads", "summary"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Lead",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Create a new lead in Zoho CRM with complete profile information",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"123-456-7890\",\n  \"company\": \"Tech Solutions Inc\",\n  \"lead_source\": \"Website\",\n  \"lead_status\": \"New\",\n  \"industry\": \"Technology\",\n  \"annual_revenue\": 500000,\n  \"website\": \"https://www.techsolutions.com\",\n  \"description\": \"Interested in our software solutions\",\n  \"street\": \"123 Main St\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"zip_code\": \"10001\",\n  \"country\": \"USA\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/zoho/leads",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "leads"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Lead",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Update an existing lead's information in Zoho CRM",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Jane\",\n  \"last_name\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"phone\": \"987-654-3210\",\n  \"company\": \"Global Enterprises\",\n  \"lead_source\": \"Referral\",\n  \"lead_status\": \"Contacted\",\n  \"industry\": \"Manufacturing\",\n  \"annual_revenue\": 1000000,\n  \"website\": \"https://www.globalent.com\",\n  \"description\": \"Follow-up required for enterprise solution\",\n  \"street\": \"456 Business Ave\",\n  \"city\": \"Los Angeles\",\n  \"state\": \"CA\",\n  \"zip_code\": \"90210\",\n  \"country\": \"USA\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/zoho/leads/{{lead_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "leads", "{{lead_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Lead",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "Delete a lead from Zoho CRM by ID",
+            "url": {
+              "raw": "{{base_url}}/zoho/leads/{{lead_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["zoho", "leads", "{{lead_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "description": "Base URL of the FastAPI application"
+    },
+    {
+      "key": "auth_code",
+      "value": "sample_auth_code",
+      "description": "OAuth authorization code received from Zoho (replace with actual code)"
+    },
+    {
+      "key": "lead_id",
+      "value": "sample_lead_id",
+      "description": "ID of the lead to update or delete (replace with actual lead ID)"
+    }
+  ]
+}
